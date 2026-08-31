@@ -6,8 +6,7 @@ const birthdayConfig = {
 
   openingMessage: "I made something for you.",
 
-  loveLetter:
-`Drodul,
+  loveLetter: `Drodul,
 
 Today is your birthday, but somehow I feel like I'm the lucky one — because I get to have you in my life.
 
@@ -19,8 +18,7 @@ I hope this new year of your life brings you endless happiness, beautiful moment
 
 Happy Birthday to the girl who holds a very special place in my heart. ❤️`,
 
-  finalMessage:
-`I hope you always keep that beautiful smile.
+  finalMessage: `I hope you always keep that beautiful smile.
 
 I hope you always remember how loved you are.
 
@@ -29,6 +27,7 @@ I hope this year gives you countless reasons to laugh, dream, and be happy.
 And wherever life takes us, I hope we continue making beautiful memories together.
 
 Thank you for being you.
+And Don't forget that you are a Aunt now but i still love you love you love you LOVE YOU SOOOOOO MUCHHHHHH, MORE THAN EVERRRR.
 
 Happy Birthday, Drodul.
 
@@ -41,15 +40,18 @@ Happy Birthday, Drodul.
     { emoji: "😂", text: "Your adorable laugh" },
     { emoji: "🌹", text: "The little things you do" },
     { emoji: "💫", text: "The person you are" },
-    { emoji: "❤️", text: "The way you make me feel loved" }
+    { emoji: "❤️", text: "The way you make me feel loved" },
   ],
 
   // Replace src with your own photos in assets/images/. Add or remove entries freely.
   photos: [
-    { src: "assets/images/photo1.jpg", caption: "One of my favorite moments with you ❤️" },
+    {
+      src: "assets/images/photo1.jpg",
+      caption: "One of my favorite moments with you ❤️",
+    },
     { src: "assets/images/photo2.jpg", caption: "A memory I'll always keep." },
     { src: "assets/images/photo3.jpg", caption: "That smile..." },
-    { src: "assets/images/photo4.jpg", caption: "Us. ❤️" }
+    { src: "assets/images/photo4.jpg", caption: "Us. ❤️" },
   ],
 
   whispers: [
@@ -57,10 +59,10 @@ Happy Birthday, Drodul.
     "My favorite person.",
     "Just you.",
     "Always you.",
-    "One heart. One beautiful girl."
+    "One heart. One beautiful girl.",
   ],
 
-  music: "assets/music/birthday-song.mp3"
+  music: "assets/music/birthday-song.mp3",
 };
 
 /* ============================================================
@@ -76,8 +78,13 @@ const rand = (min, max) => Math.random() * (max - min) + min;
 (function ambientCanvas() {
   const canvas = $("#bg-canvas");
   const ctx = canvas.getContext("2d");
-  let w, h, stars = [], fireflies = [];
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w,
+    h,
+    stars = [],
+    fireflies = [];
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
   function resize() {
     w = canvas.width = window.innerWidth;
@@ -93,7 +100,7 @@ const rand = (min, max) => Math.random() * (max - min) + min;
       r: rand(0.4, 1.6),
       baseAlpha: rand(0.2, 0.9),
       phase: rand(0, Math.PI * 2),
-      speed: rand(0.005, 0.02)
+      speed: rand(0.005, 0.02),
     }));
 
     const fCount = window.innerWidth < 600 ? 8 : 14;
@@ -103,7 +110,7 @@ const rand = (min, max) => Math.random() * (max - min) + min;
       vx: rand(-0.15, 0.15),
       vy: rand(-0.1, 0.1),
       r: rand(1.2, 2.4),
-      phase: rand(0, Math.PI * 2)
+      phase: rand(0, Math.PI * 2),
     }));
   }
 
@@ -119,9 +126,12 @@ const rand = (min, max) => Math.random() * (max - min) + min;
     }
     // fireflies (warm glowing particles)
     for (const f of fireflies) {
-      f.x += f.vx; f.y += f.vy;
-      if (f.x < 0) f.x = w; if (f.x > w) f.x = 0;
-      if (f.y < 0) f.y = h; if (f.y > h) f.y = 0;
+      f.x += f.vx;
+      f.y += f.vy;
+      if (f.x < 0) f.x = w;
+      if (f.x > w) f.x = 0;
+      if (f.y < 0) f.y = h;
+      if (f.y > h) f.y = 0;
       const a = 0.5 + 0.5 * Math.sin(t * 0.002 + f.phase);
       const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, 10);
       grad.addColorStop(0, `rgba(217,181,121,${0.8 * a})`);
@@ -136,7 +146,10 @@ const rand = (min, max) => Math.random() * (max - min) + min;
 
   resize();
   initStars();
-  window.addEventListener("resize", () => { resize(); initStars(); });
+  window.addEventListener("resize", () => {
+    resize();
+    initStars();
+  });
   requestAnimationFrame(draw);
   if (reduceMotion) draw(0);
 })();
@@ -170,7 +183,8 @@ function spawnConfetti(count = 40) {
     const el = document.createElement("span");
     el.className = "fx-confetti";
     el.style.left = rand(0, 100) + "vw";
-    el.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    el.style.background =
+      confettiColors[Math.floor(Math.random() * confettiColors.length)];
     el.style.setProperty("--rot", rand(180, 720) + "deg");
     el.style.animationDuration = rand(2.6, 4.4) + "s";
     el.style.animationDelay = rand(0, 0.5) + "s";
@@ -221,16 +235,20 @@ function fireworksShow(bursts = 4) {
   });
   setTimeout(() => button.classList.add("visible"), delay);
 
-  button.addEventListener("click", () => {
-    spawnHearts(18);
-    unlockMusic();
-    $("#opening").classList.add("opened");
-    setTimeout(() => {
-      $("#opening").style.display = "none";
-      $("#reveal").scrollIntoView({ behavior: "smooth" });
-      runRevealSequence();
-    }, 900);
-  }, { once: true });
+  button.addEventListener(
+    "click",
+    () => {
+      spawnHearts(18);
+      unlockMusic();
+      $("#opening").classList.add("opened");
+      setTimeout(() => {
+        $("#opening").style.display = "none";
+        $("#reveal").scrollIntoView({ behavior: "smooth" });
+        runRevealSequence();
+      }, 900);
+    },
+    { once: true },
+  );
 })();
 
 /* ============================================================
@@ -286,7 +304,7 @@ function typewrite(el, text, speed = 22) {
   birthdayConfig.photos.forEach((photo, i) => {
     const card = document.createElement("div");
     card.className = "memory-card";
-    card.style.setProperty("--tilt", (i % 2 === 0 ? "-3deg" : "3deg"));
+    card.style.setProperty("--tilt", i % 2 === 0 ? "-3deg" : "3deg");
     card.innerHTML = `
       <img src="${photo.src}" alt="${photo.caption}" loading="lazy"
            onerror="this.closest('.memory-card').style.display='none'">
@@ -312,35 +330,41 @@ function typewrite(el, text, speed = 22) {
 /* ============================================================
    SCROLL REVEAL (IntersectionObserver)
    ============================================================ */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
+const io = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
 
-    if (el.classList.contains("reveal-on-scroll")) {
-      el.classList.add("in-view");
-    }
+      if (el.classList.contains("reveal-on-scroll")) {
+        el.classList.add("in-view");
+      }
 
-    if (el.id === "letter" && !el.dataset.typed) {
-      el.dataset.typed = "1";
-      typewrite($("#love-message"), birthdayConfig.loveLetter, 18);
-    }
+      if (el.id === "letter" && !el.dataset.typed) {
+        el.dataset.typed = "1";
+        typewrite($("#love-message"), birthdayConfig.loveLetter, 18);
+      }
 
-    if (el.classList.contains("reason-card")) {
-      el.classList.add("visible");
-    }
+      if (el.classList.contains("reason-card")) {
+        el.classList.add("visible");
+      }
 
-    if (el.id === "reasons-outro-1" || el.id === "reasons-outro-2") {
-      setTimeout(() => el.classList.add("visible"), el.id.endsWith("2") ? 500 : 0);
-    }
+      if (el.id === "reasons-outro-1" || el.id === "reasons-outro-2") {
+        setTimeout(
+          () => el.classList.add("visible"),
+          el.id.endsWith("2") ? 500 : 0,
+        );
+      }
 
-    if (el.classList.contains("secret-line")) {
-      el.classList.add("visible");
-    }
+      if (el.classList.contains("secret-line")) {
+        el.classList.add("visible");
+      }
 
-    io.unobserve(el);
-  });
-}, { threshold: 0.35 });
+      io.unobserve(el);
+    });
+  },
+  { threshold: 0.35 },
+);
 
 $$(".reveal-on-scroll").forEach((el) => io.observe(el));
 $$(".reason-card").forEach((el) => io.observe(el));
@@ -350,40 +374,48 @@ $$(".secret-line").forEach((el) => io.observe(el));
 /* ============================================================
    FINAL SECTION SEQUENCE
    ============================================================ */
-const finalObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (!entry.isIntersecting || entry.target.dataset.done) return;
-    entry.target.dataset.done = "1";
-    let delay = 300;
-    $$(".final-line").forEach((line) => {
-      setTimeout(() => line.classList.add("visible"), delay);
-      delay += 1300;
+const finalObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting || entry.target.dataset.done) return;
+      entry.target.dataset.done = "1";
+      let delay = 300;
+      $$(".final-line").forEach((line) => {
+        setTimeout(() => line.classList.add("visible"), delay);
+        delay += 1300;
+      });
+      setTimeout(async () => {
+        await typewrite($("#final-message"), birthdayConfig.finalMessage, 20);
+        setTimeout(() => {
+          $(".i-love-you").classList.add("visible");
+          spawnHearts(24);
+          spawnConfetti(30);
+        }, 400);
+      }, delay);
+      finalObserver.unobserve(entry.target);
     });
-    setTimeout(async () => {
-      await typewrite($("#final-message"), birthdayConfig.finalMessage, 20);
-      setTimeout(() => {
-        $(".i-love-you").classList.add("visible");
-        spawnHearts(24);
-        spawnConfetti(30);
-      }, 400);
-    }, delay);
-    finalObserver.unobserve(entry.target);
-  });
-}, { threshold: 0.3 });
+  },
+  { threshold: 0.3 },
+);
 finalObserver.observe($("#final"));
 
 /* ============================================================
    SECRET GIFT BOX
    ============================================================ */
-$("#gift-box").addEventListener("click", function () {
-  this.classList.add("opened");
-  const rect = this.getBoundingClientRect();
-  spawnFirework(rect.left + rect.width / 2, rect.top + rect.height / 2);
-  spawnHearts(22);
-  spawnConfetti(50);
-  fireworksShow(4);
-  $(".gift-caption").textContent = "A little piece of my heart, made just for you. ❤️";
-}, { once: true });
+$("#gift-box").addEventListener(
+  "click",
+  function () {
+    this.classList.add("opened");
+    const rect = this.getBoundingClientRect();
+    spawnFirework(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    spawnHearts(22);
+    spawnConfetti(50);
+    fireworksShow(4);
+    $(".gift-caption").textContent =
+      "A little piece of my heart, made just for you. ❤️";
+  },
+  { once: true },
+);
 
 /* ============================================================
    MUSIC CONTROL
@@ -397,14 +429,17 @@ function unlockMusic() {
   musicUnlocked = true;
   audio.src = birthdayConfig.music;
   musicBtn.disabled = false;
-  audio.play().then(() => {
-    musicBtn.classList.add("playing");
-    musicBtn.querySelector(".music-icon").textContent = "♪";
-    musicBtn.setAttribute("aria-label", "Pause music");
-  }).catch(() => {
-    // Autoplay blocked or file missing — site still works fine without it.
-    musicBtn.classList.remove("playing");
-  });
+  audio
+    .play()
+    .then(() => {
+      musicBtn.classList.add("playing");
+      musicBtn.querySelector(".music-icon").textContent = "♪";
+      musicBtn.setAttribute("aria-label", "Pause music");
+    })
+    .catch(() => {
+      // Autoplay blocked or file missing — site still works fine without it.
+      musicBtn.classList.remove("playing");
+    });
 }
 
 musicBtn.addEventListener("click", () => {
@@ -433,21 +468,28 @@ audio.addEventListener("error", () => {
   let lastShown = 0;
   let ticking = false;
 
-  window.addEventListener("scroll", () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const now = Date.now();
-      if (now - lastShown > 9000 && Math.random() < 0.12) {
-        lastShown = now;
-        const phrase = birthdayConfig.whispers[Math.floor(Math.random() * birthdayConfig.whispers.length)];
-        whisperEl.textContent = phrase;
-        whisperEl.classList.add("show");
-        setTimeout(() => whisperEl.classList.remove("show"), 3200);
-      }
-      ticking = false;
-    });
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const now = Date.now();
+        if (now - lastShown > 9000 && Math.random() < 0.12) {
+          lastShown = now;
+          const phrase =
+            birthdayConfig.whispers[
+              Math.floor(Math.random() * birthdayConfig.whispers.length)
+            ];
+          whisperEl.textContent = phrase;
+          whisperEl.classList.add("show");
+          setTimeout(() => whisperEl.classList.remove("show"), 3200);
+        }
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
 })();
 
 /* ============================================================
