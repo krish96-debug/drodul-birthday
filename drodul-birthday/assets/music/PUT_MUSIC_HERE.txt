@@ -1,0 +1,1 @@
+Put your song here as birthday-song.mp3 (see script.js -> birthdayConfig.music)
